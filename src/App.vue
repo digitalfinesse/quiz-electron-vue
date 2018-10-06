@@ -1,7 +1,29 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <div v-for="(quiz, index) in quizez"
+         v-show="index === questionindex">
+      <h1>{{ quiz.category }}</h1>
+      <h2>{{ quiz.question }}</h2>
+      <ol>
+        <li v-for="answer in quiz.incorrect_answers">
+          <label>
+            <input type="radio"
+                   name="answer"
+                   v-model="answers[index]"
+                   :value="answer"> {{answer}}
+          </label>
+        </li>
+      </ol>
+
+    </div>
+    <div v-if="questionindex < quizez.length">
+      <button v-if="questionindex > 0"
+              v-on:click="prev">prev
+      </button>
+      <button v-on:click="next">next</button>
+    </div>
+    <span v-if="questionindex == quizez.length">Your Total score is {{score}} / {{quizez.length}}</span>
+
   </div>
 </template>
 
@@ -186,6 +208,7 @@
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+    ::selection { background: white; }
   }
 
 </style>
